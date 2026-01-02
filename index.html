@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awais Visuals - Video Editor Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #0f0c29 50%, #1a1a1a 75%, #0a0a0a 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Custom Cursor - Design Arena Style */
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        
+        .cursor-circle {
+            width: 30px;
+            height: 30px;
+            border: 1px solid white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease-out;
+        }
+        
+        /* Hide cursor on mobile */
+        @media (max-width: 768px) {
+            * {
+                cursor: auto !important;
+            }
+            .cursor-dot, .cursor-circle {
+                display: none;
+            }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Video containers */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(42, 42, 42, 0.9) 100%);
+        }
+        
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Vertical video container */
+        .vertical-video-container {
+            position: relative;
+            width: 100%;
+            max-width: 360px; /* Max width for vertical videos */
+            height: 640px; /* Fixed height for 9:16 */
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(42, 42, 42, 0.9) 100%);
+        }
+        
+        .vertical-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.2) translateY(-3px);
+        }
+        
+        .section-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .section-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transition: left 0.3s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 0;
+        }
+        
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: auto;
+            width: 90%;
+            max-width: 1200px;
+            animation: slideDown 0.3s ease;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        /* Vertical video modal content */
+        .vertical-modal-content {
+            position: relative;
+            margin: auto;
+            width: 90%;
+            max-width: 400px;
+            animation: slideDown 0.3s ease;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideDown {
+            from { transform: translate(-50%, -60%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .close-modal:hover {
+            color: #667eea;
+        }
+        
+        .skill-bar {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(42, 42, 42, 0.9) 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 12px;
+            position: relative;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+        
+        /* Thumbnail styles */
+        .horizontal-thumbnail {
+            height: 400px;
+            object-fit: cover;
+            width: 100%;
+            border-radius: 12px;
+        }
+        
+        /* Vertical thumbnail - CLEARLY VERTICAL 9:16 */
+        .vertical-thumbnail {
+            width: 100%;
+            max-width: 300px;
+            height: 533px; /* 9:16 aspect ratio (300 * 16/9 ≈ 533) */
+            object-fit: cover;
+            object-position: center;
+            border-radius: 12px;
+            margin: 0 auto;
+        }
+        
+        /* Testimonial avatar styles */
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Section backgrounds with subtle gradients */
+        #home {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(26, 26, 26, 0.7) 50%, rgba(10, 10, 10, 0.8) 100%);
+        }
+        
+        #about {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 26, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%);
+        }
+        
+        #portfolio {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(10, 10, 10, 0.9) 100%);
+        }
+        
+        #skills {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 26, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%);
+        }
+        
+        #contact {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(10, 10, 10, 0.9) 100%);
+        }
+        
+        /* Card backgrounds */
+        .gradient-card-bg {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        @media (max-width: 1024px) {
+            .horizontal-thumbnail { height: 350px; }
+            .vertical-thumbnail { 
+                max-width: 280px;
+                height: 497px; /* 280 * 16/9 ≈ 497 */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .horizontal-thumbnail { height: 300px; }
+            .vertical-thumbnail { 
+                max-width: 250px;
+                height: 444px; /* 250 * 16/9 ≈ 444 */
+            }
+            .vertical-video-container {
+                max-width: 300px;
+                height: 533px;
+            }
+            .vertical-modal-content {
+                max-width: 320px;
+            }
+            .hero-text { font-size: 2.5rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .vertical-thumbnail { 
+                max-width: 220px;
+                height: 391px; /* 220 * 16/9 ≈ 391 */
+            }
+            .vertical-video-container {
+                max-width: 280px;
+                height: 497px;
+            }
+            .vertical-modal-content {
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="smooth-scroll">
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl font-bold gradient-text">AWAIS VISUALS</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="nav-link text-gray-300 hover:text-white px-3 py-2">Home</a>
+                        <a href="#about" class="nav-link text-gray-300 hover:text-white px-3 py-2">About</a>
+                        <a href="#portfolio" class="nav-link text-gray-300 hover:text-white px-3 py-2">Portfolio</a>
+                        <a href="#skills" class="nav-link text-gray-300 hover:text-white px-3 py-2">Skills</a>
+                        <a href="#contact" class="nav-link text-gray-300 hover:text-white px-3 py-2">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95 border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block text-gray-300 hover:text-white px-3 py-2">Home</a>
+                <a href="#about" class="block text-gray-300 hover:text-white px-3 py-2">About</a>
+                <a href="#portfolio" class="block text-gray-300 hover:text-white px-3 py-2">Portfolio</a>
+                <a href="#skills" class="block text-gray-300 hover:text-white px-3 py-2">Skills</a>
+                <a href="#contact" class="block text-gray-300 hover:text-white px-3 py-2">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+        <div class="absolute inset-0 hero-gradient opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="section-fade">
+                <h1 class="hero-text text-5xl md:text-7xl font-black mb-6">
+                    Hi, I'm <span class="gradient-text">Awais</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto">
+                    Professional Video Editor
+                </p>
+                <p class="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">
+                    Transforming raw footage into compelling visual stories that captivate audiences and drive results.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#portfolio" class="btn-primary text-white px-8 py-4 rounded-full font-semibold text-lg inline-block">
+                        <span>View My Work</span>
+                    </a>
+                    <a href="#contact" class="border-2 border-purple-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-purple-500/10 transition">
+                        Get In Touch
+                    </a>
+                </div>
+                <div class="flex justify-center gap-6 mt-12">
+                    <a href="https://www.instagram.com/awais021390?igsh=N3VvbG9zd2o1c3lw" target="_blank" class="social-icon text-3xl text-gray-400 hover:text-purple-500">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://discord.com/channels/1243406156249170001" target="_blank" class="social-icon text-3xl text-gray-400 hover:text-purple-500">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/awais-visuals-ba4267331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-icon text-3xl text-gray-400 hover:text-purple-500">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-fade">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    About <span class="gradient-text">Me</span>
+                </h2>
+                <div class="w-20 h-1 hero-gradient mx-auto mb-12"></div>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20">
+                            <h3 class="text-2xl font-bold mb-4 gradient-text">Who I Am</h3>
+                            <p class="text-gray-300 mb-4 leading-relaxed">
+                                I'm a passionate video editor with over 3 years of experience in creating engaging content for brands, YouTubers, and businesses worldwide. My expertise lies in transforming raw footage into polished, professional videos that tell compelling stories and drive engagement.
+                            </p>
+                            <p class="text-gray-300 mb-4 leading-relaxed">
+                                From fast-paced social media content to cinematic corporate videos, I bring creativity, technical skill, and attention to detail to every project. I specialize in Adobe Premiere Pro, After Effects, and DaVinci Resolve, ensuring your content stands out in today's crowded digital landscape.
+                            </p>
+                            <p class="text-gray-300 leading-relaxed">
+                                Whether you need promotional videos, YouTube content, social media clips, or full-scale video production, I'm here to bring your vision to life with professional quality and creative excellence.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <div class="text-4xl font-bold gradient-text mb-2">174+</div>
+                                <div class="text-gray-400">Completed Videos</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <div class="text-4xl font-bold gradient-text mb-2">32+</div>
+                                <div class="text-gray-400">Happy Clients</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <div class="text-4xl font-bold gradient-text mb-2">3+</div>
+                                <div class="text-gray-400">Years Experience</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <div class="text-4xl font-bold gradient-text mb-2">25M+</div>
+                                <div class="text-gray-400">Total Views</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-fade">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-12">
+                    My <span class="gradient-text">Portfolio</span>
+                </h2>
+                
+                <!-- Vertical Videos Section FIRST - CLEARLY VERTICAL 9:16 -->
+                <div class="mb-20">
+                    <div class="text-center mb-12">
+                        <h3 class="text-4xl font-bold gradient-text section-title">Vertical Videos</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Vertical Video 1 - YouTube thumbnail -->
+                        <div class="portfolio-item card-hover" onclick="openModal('modal1')">
+                            <img src="https://img.youtube.com/vi/ysplmAjAnfY/maxresdefault.jpg" alt="Instagram Reel" class="vertical-thumbnail">
+                            <div class="portfolio-overlay rounded-xl">
+                                <div class="text-center p-4">
+                                    <i class="fas fa-play-circle text-6xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold">Instagram Reel</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Vertical Video 2 - YouTube thumbnail -->
+                        <div class="portfolio-item card-hover" onclick="openModal('modal2')">
+                            <img src="https://img.youtube.com/vi/RTfiROJ_9wk/maxresdefault.jpg" alt="TikTok Video" class="vertical-thumbnail">
+                            <div class="portfolio-overlay rounded-xl">
+                                <div class="text-center p-4">
+                                    <i class="fas fa-play-circle text-6xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold">TikTok Video</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Vertical Video 3 - YouTube thumbnail -->
+                        <div class="portfolio-item card-hover" onclick="openModal('modal3')">
+                            <img src="https://img.youtube.com/vi/wtaY72PbQIE/maxresdefault.jpg" alt="Instagram Story" class="vertical-thumbnail">
+                            <div class="portfolio-overlay rounded-xl">
+                                <div class="text-center p-4">
+                                    <i class="fas fa-play-circle text-6xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold">Instagram Story</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Vertical Video 4 - YouTube thumbnail -->
+                        <div class="portfolio-item card-hover" onclick="openModal('modal4')">
+                            <img src="https://img.youtube.com/vi/2fZ6tntWnDs/maxresdefault.jpg" alt="Short Form Content" class="vertical-thumbnail">
+                            <div class="portfolio-overlay rounded-xl">
+                                <div class="text-center p-4">
+                                    <i class="fas fa-play-circle text-6xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold">Short Form Content</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Horizontal Videos Section SECOND -->
+                <div>
+                    <div class="text-center mb-12">
+                        <h3 class="text-4xl font-bold gradient-text section-title">Horizontal Videos</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Horizontal Video 1 - YouTube thumbnail -->
+                        <div class="portfolio-item card-hover" onclick="openModal('modal5')">
+                            <img src="https://img.youtube.com/vi/UjLoo4t8RyU/maxresdefault.jpg" alt="Brand Commercial" class="horizontal-thumbnail">
+                            <div class="portfolio-overlay rounded-xl">
+                                <div class="text-center">
+                                    <i class="fas fa-play-circle text-6xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold">Brand Commercial</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Horizontal Video 2 - YouTube thumbnail -->
+                        <div class="portfolio-item card-hover" onclick="openModal('modal6')">
+                            <img src="https://img.youtube.com/vi/7Dh0sBCHmIw/maxresdefault.jpg" alt="YouTube Content" class="horizontal-thumbnail">
+                            <div class="portfolio-overlay rounded-xl">
+                                <div class="text-center">
+                                    <i class="fas fa-play-circle text-6xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold">YouTube Content</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Horizontal Video 3 - YouTube thumbnail -->
+                        <div class="portfolio-item card-hover" onclick="openModal('modal7')">
+                            <img src="https://img.youtube.com/vi/w85OpzTjNiw/maxresdefault.jpg" alt="Social Media Ad" class="horizontal-thumbnail">
+                            <div class="portfolio-overlay rounded-xl">
+                                <div class="text-center">
+                                    <i class="fas fa-play-circle text-6xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold">Social Media Ad</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Horizontal Video 4 - YouTube thumbnail -->
+                        <div class="portfolio-item card-hover" onclick="openModal('modal8')">
+                            <img src="https://img.youtube.com/vi/IdisUzxxdrs/maxresdefault.jpg" alt="Music Video" class="horizontal-thumbnail">
+                            <div class="portfolio-overlay rounded-xl">
+                                <div class="text-center">
+                                    <i class="fas fa-play-circle text-6xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold">Music Video</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modals - REORDERED TO MATCH PORTFOLIO ORDER -->
+    <!-- Vertical Video Modals (9:16) - FIRST -->
+    <div id="modal1" class="modal">
+        <div class="vertical-modal-content">
+            <span class="close-modal" onclick="closeModal('modal1')">&times;</span>
+            <!-- Vertical 9:16 with proper container -->
+            <div class="vertical-video-container">
+                <iframe src="https://www.youtube.com/embed/ysplmAjAnfY" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal2" class="modal">
+        <div class="vertical-modal-content">
+            <span class="close-modal" onclick="closeModal('modal2')">&times;</span>
+            <div class="vertical-video-container">
+                <iframe src="https://www.youtube.com/embed/RTfiROJ_9wk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal3" class="modal">
+        <div class="vertical-modal-content">
+            <span class="close-modal" onclick="closeModal('modal3')">&times;</span>
+            <div class="vertical-video-container">
+                <iframe src="https://www.youtube.com/embed/wtaY72PbQIE" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal4" class="modal">
+        <div class="vertical-modal-content">
+            <span class="close-modal" onclick="closeModal('modal4')">&times;</span>
+            <div class="vertical-video-container">
+                <iframe src="https://www.youtube.com/embed/2fZ6tntWnDs" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Horizontal Video Modals (16:9) - SECOND -->
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal5')">&times;</span>
+            <!-- Horizontal 16:9 -->
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/UjLoo4t8RyU" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal6" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal6')">&times;</span>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/7Dh0sBCHmIw" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal7" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal7')">&times;</span>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/w85OpzTjNiw" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal8" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal8')">&times;</span>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/IdisUzxxdrs" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-fade">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    My <span class="gradient-text">Skills</span>
+                </h2>
+                <div class="w-20 h-1 hero-gradient mx-auto mb-12"></div>
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">Technical Skills</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-300">Adobe Premiere Pro</span>
+                                    <span class="text-gray-400">95%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 95%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-300">After Effects</span>
+                                    <span class="text-gray-400">90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 90%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-300">DaVinci Resolve</span>
+                                    <span class="text-gray-400">85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-300">Photoshop</span>
+                                    <span class="text-gray-400">80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 80%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-300">Final Cut Pro</span>
+                                    <span class="text-gray-400">75%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 75%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">Creative Skills</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <i class="fas fa-video text-4xl gradient-text mb-3"></i>
+                                <h4 class="font-semibold text-gray-200">Video Editing</h4>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <i class="fas fa-palette text-4xl gradient-text mb-3"></i>
+                                <h4 class="font-semibold text-gray-200">Color Grading</h4>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <i class="fas fa-wand-magic-sparkles text-4xl gradient-text mb-3"></i>
+                                <h4 class="font-semibold text-gray-200">Motion Graphics</h4>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <i class="fas fa-volume-high text-4xl gradient-text mb-3"></i>
+                                <h4 class="font-semibold text-gray-200">Sound Design</h4>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <i class="fas fa-book text-4xl gradient-text mb-3"></i>
+                                <h4 class="font-semibold text-gray-200">Storytelling</h4>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-6 rounded-xl border border-purple-500/20 card-hover text-center">
+                                <i class="fas fa-chart-line text-4xl gradient-text mb-3"></i>
+                                <h4 class="font-semibold text-gray-200">Analytics</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-fade">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    What I <span class="gradient-text">Offer</span>
+                </h2>
+                <div class="w-20 h-1 hero-gradient mx-auto mb-12"></div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20 card-hover">
+                        <i class="fas fa-film text-5xl gradient-text mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-4">Video Editing</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Professional video editing services for YouTube, social media, commercials, and corporate videos. Fast turnaround with unlimited revisions.
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20 card-hover">
+                        <i class="fas fa-magic text-5xl gradient-text mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-4">Motion Graphics</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Eye-catching motion graphics, titles, and animations that add a professional touch to your videos and help your content stand out.
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20 card-hover">
+                        <i class="fas fa-paint-brush text-5xl gradient-text mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-4">Color Grading</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Cinematic color grading and correction to give your videos a polished, professional look that matches your brand aesthetic.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-fade">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    Client <span class="gradient-text">Testimonials</span>
+                </h2>
+                <div class="w-20 h-1 hero-gradient mx-auto mb-12"></div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20 card-hover">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <p class="text-gray-300 mb-4 italic">
+                            "Awais delivered exceptional quality work on our brand video. His attention to detail and creative vision exceeded our expectations. Highly recommended!"
+                        </p>
+                        <div class="flex items-center">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=face" alt="Sarah Johnson" class="testimonial-avatar mr-3">
+                            <div>
+                                <h4 class="font-semibold">Sarah Johnson</h4>
+                                <p class="text-sm text-gray-400">Marketing Director</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20 card-hover">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <p class="text-gray-300 mb-4 italic">
+                            "Working with Awais was a game-changer for our YouTube channel. Our engagement doubled since he started editing our videos. Professional and reliable!"
+                        </p>
+                        <div class="flex items-center">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" alt="Mike Chen" class="testimonial-avatar mr-3">
+                            <div>
+                                <h4 class="font-semibold">Mike Chen</h4>
+                                <p class="text-sm text-gray-400">Content Creator</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20 card-hover">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <p class="text-gray-300 mb-4 italic">
+                            "Incredible work! Awais transformed our raw footage into stunning promotional videos that perfectly captured our brand essence. Will definitely work with him again."
+                        </p>
+                        <div class="flex items-center">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face" alt="Emily Rodriguez" class="testimonial-avatar mr-3">
+                            <div>
+                                <h4 class="font-semibold">Emily Rodriguez</h4>
+                                <p class="text-sm text-gray-400">Business Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-fade">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    Get In <span class="gradient-text">Touch</span>
+                </h2>
+                <div class="w-20 h-1 hero-gradient mx-auto mb-12"></div>
+                <div class="grid md:grid-cols-2 gap-12 items-start">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">Let's Work Together</h3>
+                        <p class="text-gray-400 mb-8 leading-relaxed">
+                            Ready to elevate your video content? Whether you need a single video or ongoing editing support, I'm here to help. Fill out the form and I'll get back to you within 24 hours.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope text-2xl gradient-text mr-4"></i>
+                                <span class="text-gray-300">awaisvisuals10@email.com</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone text-2xl gradient-text mr-4"></i>
+                                <span class="text-gray-300">+923317635633</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-2xl gradient-text mr-4"></i>
+                                <span class="text-gray-300">Available Worldwide</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 mt-8">
+                            <a href="https://www.instagram.com/awais021390?igsh=N3VvbG9zd2o1c3lw" target="_blank" class="w-12 h-12 bg-gradient-to-br from-purple-900/20 to-blue-900/20 border border-purple-500/20 rounded-full flex items-center justify-center social-icon">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="https://discord.com/channels/1243406156249170001" target="_blank" class="w-12 h-12 bg-gradient-to-br from-purple-900/20 to-blue-900/20 border border-purple-500/20 rounded-full flex items-center justify-center social-icon">
+                                <i class="fab fa-discord text-xl"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/awais-visuals-ba4267331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="w-12 h-12 bg-gradient-to-br from-purple-900/20 to-blue-900/20 border border-purple-500/20 rounded-full flex items-center justify-center social-icon">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20">
+                        <form id="contact-form">
+                            <div class="mb-6">
+                                <label class="block text-gray-300 mb-2">Name</label>
+                                <input type="text" required class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-500 text-white" placeholder="Your Name">
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-300 mb-2">Email</label>
+                                <input type="email" required class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-500 text-white" placeholder="your@email.com">
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-300 mb-2">Service Needed</label>
+                                <select class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-500 text-white">
+                                    <option>Video Editing</option>
+                                    <option>Motion Graphics</option>
+                                    <option>Color Grading</option>
+                                    <option>Full Production</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-300 mb-2">Message</label>
+                                <textarea required rows="4" class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-500 text-white" placeholder="Tell me about your project..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary w-full text-white px-8 py-4 rounded-lg font-semibold text-lg">
+                                <span>Send Message</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold gradient-text mb-2">AWAIS VISUALS</h3>
+                <p class="text-gray-400 mb-4">Professional Video Editor</p>
+                <p class="text-gray-500 text-sm">© 2024 Awais Visuals. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor - Design Arena Style
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorCircle = document.querySelector('.cursor-circle');
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let circleX = 0;
+        let circleY = 0;
+        
+        // Track mouse position
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Update dot position immediately
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+        
+        // Smooth animation for circle
+        function animateCursor() {
+            // Calculate distance between current circle position and mouse position
+            let dx = mouseX - circleX;
+            let dy = mouseY - circleY;
+            
+            // Apply smooth easing (0.15 is the speed factor - same as designarena)
+            circleX += dx * 0.15;
+            circleY += dy * 0.15;
+            
+            // Update circle position
+            cursorCircle.style.left = circleX + 'px';
+            cursorCircle.style.top = circleY + 'px';
+            
+            // Continue animation
+            requestAnimationFrame(animateCursor);
+        }
+        
+        // Start animation
+        animateCursor();
+        
+        // Hide cursor when mouse leaves window
+        document.addEventListener('mouseleave', () => {
+            cursorDot.style.opacity = '0';
+            cursorCircle.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            cursorDot.style.opacity = '1';
+            cursorCircle.style.opacity = '1';
+        });
+        
+        // Disable on mobile
+        if ('ontouchstart' in window || navigator.maxTouchPoints) {
+            document.body.style.cursor = 'auto';
+            cursorDot.style.display = 'none';
+            cursorCircle.style.display = 'none';
+        }
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            // Pause iframe by resetting src (prevents audio continue)
+            const iframe = modal.querySelector('iframe');
+            if (iframe) {
+                const src = iframe.src;
+                iframe.src = '';
+                setTimeout(() => iframe.src = src, 0);
+            }
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                // Stop video inside
+                const iframe = event.target.querySelector('iframe');
+                if (iframe) {
+                    const src = iframe.src;
+                    iframe.src = '';
+                    setTimeout(() => iframe.src = src, 0);
+                }
+            }
+        }
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.section-fade').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Animate skill bars on scroll
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.skill-progress');
+                    progressBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 100);
+                    });
+                    skillObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            skillObserver.observe(skillsSection);
+        }
+        
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you within 24 hours.');
+            this.reset();
+        });
+        
+        // Add active state to navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollY = window.pageYOffset;
+            
+            sections.forEach(section => {
+                const sectionHeight = section.offsetHeight;
+                const sectionTop = section.offsetTop - 100;
+                const sectionId = section.getAttribute('id');
+                const navLink = document.querySelector(`a[href="#${sectionId}"]`);
+                
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('text-white');
+                        link.classList.add('text-gray-300');
+                    });
+                    if (navLink) {
+                        navLink.classList.remove('text-gray-300');
+                        navLink.classList.add('text-white');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
