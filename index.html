@@ -1040,107 +1040,94 @@
         </div>
     </section>
 
-    <!-- Contact Section - Updated with new project type selection -->
-    <section id="contact" class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="section-fade">
-                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
-                    What Type of <span class="gradient-text">Video Do You Need?</span>
-                </h2>
-                <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">Tell me about your project goals and I'll craft the perfect strategy for you</p>
-                
-                <div class="grid md:grid-cols-2 gap-8 mb-12">
-                    <div class="project-type-card">
-                        <h3 class="project-type-title gradient-text">Short-Form Projects</h3>
-                        <p class="project-type-subtitle">Perfect for social media growth, viral campaigns, and quick engagement.</p>
-                        
-                        <ul class="project-feature-list">
-                            <li>Instagram Reels/TikTok</li>
-                            <li>YouTube Shorts</li>
-                            <li>Social Media Ads</li>
-                            <li>Quick Promos</li>
-                        </ul>
-                        
-                        <div class="project-type-divider"></div>
-                        
-                        <div class="text-center">
-                            <a href="#contact-form" class="btn-primary text-white px-6 py-3 rounded-lg font-semibold inline-block">
-                                <span>Start Short-Form Project →</span>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="project-type-card">
-                        <h3 class="project-type-title gradient-text">Long-Form Projects</h3>
-                        <p class="project-type-subtitle">Ideal for brand storytelling, education, and deep audience connection.</p>
-                        
-                        <ul class="project-feature-list">
-                            <li>YouTube Videos</li>
-                            <li>Documentaries</li>
-                            <li>Brand Films</li>
-                            <li>Tutorials/Courses</li>
-                        </ul>
-                        
-                        <div class="project-type-divider"></div>
-                        
-                        <div class="text-center">
-                            <a href="#contact-form" class="btn-primary text-white px-6 py-3 rounded-lg font-semibold inline-block">
-                                <span>Start Long-Form Project →</span>
-                            </a>
-                        </div>
-                    </div>
+    <!-- CONTACT SECTION WITH EMAILJS -->
+<section id="contact" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+            What Type of <span class="gradient-text">Video Do You Need?</span>
+        </h2>
+        <p class="text-gray-400 text-center mb-12">
+            Tell me about your project goals and I'll craft the perfect strategy for you
+        </p>
+
+        <div id="contact-form" class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20">
+            <form id="contact-form-element">
+
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2">Project Type *</label>
+                    <select name="projectType" required class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg text-white">
+                        <option value="">Select your project type</option>
+                        <option value="Short-Form">Short-Form</option>
+                        <option value="Long-Form">Long-Form</option>
+                        <option value="Both">Both</option>
+                        <option value="Consultation">Consultation</option>
+                    </select>
                 </div>
-                
-                <div id="contact-form" class="bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-8 rounded-2xl border border-purple-500/20">
-                    <form id="contact-form-element">
-                        <div class="mb-6">
-                            <label class="block text-gray-300 mb-2">Project Type *</label>
-                            <select id="project-type" class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-500 text-white">
-                                <option value="">Select your project type</option>
-                                <option value="short-form">Short-Form (Reels, TikTok, Shorts)</option>
-                                <option value="long-form">Long-Form (YouTube, Documentary, Brand Film)</option>
-                                <option value="both">Both Short & Long Form Content</option>
-                                <option value="not-sure">Not Sure - Need Consultation</option>
-                            </select>
-                        </div>
-                        
-                        <div class="grid md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <label class="block text-gray-300 mb-2">Name *</label>
-                                <input type="text" required class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-500 text-white" placeholder="Your Name">
-                            </div>
-                            <div>
-                                <label class="block text-gray-300 mb-2">Email *</label>
-                                <input type="email" required class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-500 text-white" placeholder="your@email.com">
-                            </div>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label class="block text-gray-300 mb-2">What's Your Main Goal? *</label>
-                            <select class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-500 text-white">
-                                <option>Increase Engagement/Views</option>
-                                <option>Drive Conversions/Sales</option>
-                                <option>Brand Awareness/Storytelling</option>
-                                <option>Product/Service Explanation</option>
-                                <option>Social Media Growth</option>
-                                <option>Educational Content</option>
-                                <option>Other Strategic Goal</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label class="block text-gray-300 mb-2">Project Details *</label>
-                            <textarea required rows="4" class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg focus:outline-none focus:border-purple-500 text-white" placeholder="Tell me about your project, goals, timeline, and any specific requirements..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn-primary w-full text-white px-8 py-4 rounded-lg font-semibold text-lg">
-                            <span>Get Your Custom Video Strategy →</span>
-                        </button>
-                    </form>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <input type="text" name="name" required placeholder="Your Name"
+                        class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg text-white">
+
+                    <input type="email" name="email" required placeholder="Your Email"
+                        class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg text-white">
                 </div>
-            </div>
+
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2">Main Goal *</label>
+                    <select name="goal" class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg text-white">
+                        <option>Increase Engagement</option>
+                        <option>Sales / Conversions</option>
+                        <option>Brand Awareness</option>
+                        <option>Education</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <textarea name="details" rows="4" required
+                        class="w-full px-4 py-3 bg-black/50 border border-purple-500/30 rounded-lg text-white"
+                        placeholder="Project details..."></textarea>
+                </div>
+
+                <button type="submit"
+                    class="btn-primary w-full text-white px-8 py-4 rounded-lg font-semibold text-lg">
+                    Get Your Custom Video Strategy →
+                </button>
+
+                <p id="form-status" class="text-green-400 text-center mt-4 hidden">
+                    ✅ Message sent successfully!
+                </p>
+
+            </form>
         </div>
-    </section>
+    </div>
+</section>
+
+<!-- EMAILJS SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function () {
+    emailjs.init("YOUR_PUBLIC_KEY");
+})();
+
+document.getElementById("contact-form-element").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    emailjs.sendForm(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        this
+    ).then(function () {
+        document.getElementById("form-status").classList.remove("hidden");
+        document.getElementById("contact-form-element").reset();
+    }, function (error) {
+        alert("FAILED... Please try again.");
+        console.log(error);
+    });
+});
+</script>
+
 
     <!-- Footer -->
     <footer class="py-8 border-t border-gray-800">
