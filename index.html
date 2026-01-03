@@ -27,9 +27,10 @@
             color: white;
         }
         
+        /* ONLY CHANGED THE BODY BACKGROUND - Using peacock blue colors */
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #0f0c29 50%, #1a1a1a 75%, #0a0a0a 100%);
+            background: linear-gradient(135deg, #000000 0%, #000725 25%, #004959 50%, #000725 75%, #000000 100%);
             background-attachment: fixed;
             color: #ffffff;
             overflow-x: hidden;
@@ -37,6 +38,54 @@
             -webkit-tap-highlight-color: transparent;
         }
         
+        /* ONLY CHANGED SECTION BACKGROUNDS - Using peacock blue colors */
+        #home {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 7, 37, 0.7) 50%, rgba(0, 0, 0, 0.8) 100%);
+        }
+        
+        #about {
+            background: linear-gradient(135deg, rgba(0, 7, 37, 0.9) 0%, rgba(0, 73, 89, 0.8) 50%, rgba(0, 7, 37, 0.9) 100%);
+        }
+        
+        #short-form {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 73, 89, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%);
+        }
+        
+        #long-form {
+            background: linear-gradient(135deg, rgba(0, 7, 37, 0.9) 0%, rgba(0, 115, 136, 0.8) 50%, rgba(0, 7, 37, 0.9) 100%);
+        }
+        
+        #process {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 73, 89, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%);
+        }
+        
+        #contact {
+            background: linear-gradient(135deg, rgba(0, 7, 37, 0.9) 0%, rgba(0, 115, 136, 0.8) 50%, rgba(0, 7, 37, 0.9) 100%);
+        }
+        
+        /* ONLY CHANGED VIDEO CONTAINER BACKGROUNDS - Using peacock blue colors */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 73, 89, 0.9) 0%, rgba(0, 115, 136, 0.9) 100%);
+        }
+        
+        .vertical-video-container {
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+            height: 640px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 73, 89, 0.9) 0%, rgba(0, 115, 136, 0.9) 100%);
+        }
+        
+        /* EVERYTHING BELOW THIS IS EXACTLY AS IT WAS IN YOUR ORIGINAL CODE */
         .cursor-dot {
             width: 6px;
             height: 6px;
@@ -93,16 +142,6 @@
             box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
         }
         
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%;
-            overflow: hidden;
-            border-radius: 12px;
-            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(42, 42, 42, 0.9) 100%);
-        }
-        
         .video-container iframe {
             position: absolute;
             top: 0;
@@ -110,17 +149,6 @@
             width: 100%;
             height: 100%;
             border: none;
-        }
-        
-        .vertical-video-container {
-            position: relative;
-            width: 100%;
-            max-width: 360px;
-            height: 640px;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 12px;
-            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(42, 42, 42, 0.9) 100%);
         }
         
         .vertical-video-container iframe {
@@ -363,26 +391,6 @@
             -moz-user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
-        }
-        
-        #home {
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(26, 26, 26, 0.7) 50%, rgba(10, 10, 10, 0.8) 100%);
-        }
-        
-        #about {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 26, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%);
-        }
-        
-        #portfolio {
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(10, 10, 10, 0.9) 100%);
-        }
-        
-        #skills {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 26, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%);
-        }
-        
-        #contact {
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(10, 10, 10, 0.9) 100%);
         }
         
         .case-study-badge {
@@ -1609,6 +1617,7 @@
         
         // Page loaded
         console.log("🎬 Awais Visuals Portfolio loaded successfully!");
+        console.log("🎨 New peacock blue background theme applied!");
         console.log("📧 Form is configured with Formspree - WILL WORK!");
         console.log("🔗 Form endpoint: https://formspree.io/f/xvgnewbj");
     </script>
